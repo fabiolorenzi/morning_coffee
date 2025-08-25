@@ -2,16 +2,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch MorningCoffee",
+            "name": "Debug MorningCoffee (Dev)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/MorningCoffee",
+            "program": "${workspaceFolder}/build/dev/MorningCoffee",
             "args": [],
-            "stopAtEntry": false,
+            "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
