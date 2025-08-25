@@ -2,9 +2,52 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build",
+            "label": "Config",
             "type": "shell",
-            "command": "cmake --build build"
+            "command": "cmake",
+            "args": [
+                "-S", ".",
+                "-B", "build/dev",
+                "-DCMAKE_BUILD_TYPE=Debug"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Build Dev",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "build/dev", "--config", "Debug"],
+            "group": "build",
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Config Production",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-S", ".",
+                "-B", "build/production",
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Build Production",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "build/production", "--config", "Release"],
+            "group": "build",
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Clean Build",
+            "type": "shell",
+            "command": "rm",
+            "args": ["-r", "build"],
+            "group": "build",
+            "problemMatcher": []
         }
     ]
 }
