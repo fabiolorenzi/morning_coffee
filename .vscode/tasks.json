@@ -14,14 +14,6 @@
             "problemMatcher": ["$gcc"]
         },
         {
-            "label": "Build Dev",
-            "type": "shell",
-            "command": "cmake",
-            "args": ["--build", "build/dev", "--config", "Debug"],
-            "group": "build",
-            "problemMatcher": ["$gcc"]
-        },
-        {
             "label": "Config Production",
             "type": "shell",
             "command": "cmake",
@@ -34,12 +26,37 @@
             "problemMatcher": ["$gcc"]
         },
         {
+            "label": "Build Dev",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "build/dev", "--config", "Debug"],
+            "group": "build",
+            "problemMatcher": ["$gcc"]
+        },
+        {
             "label": "Build Production",
             "type": "shell",
             "command": "cmake",
             "args": ["--build", "build/production", "--config", "Release"],
             "group": "build",
             "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Run Dev",
+            "type": "shell",
+            "command": "./build/dev/MorningCoffee",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Production",
+            "type": "shell",
+            "command": "./build/production/MorningCoffee",
+            "group": "test",
+            "problemMatcher": []
         },
         {
             "label": "Clean Build",
