@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
+    stackedWidget = new QStackedWidget(this);
+
     setWindowFlags(Qt::Window);
     setMinimumSize(Sizes::minWidth, Sizes::minHeight);
     resize(Sizes::minWidth, Sizes::minHeight);
@@ -10,5 +12,22 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setMenuBar(menuBar);
 
     defaultWidget = new DefaultWidget(this);
-    setCentralWidget(defaultWidget);
+    addSourceWidget = new AddSourceWidget(this);
+
+    stackedWidget->addWidget(defaultWidget);
+    stackedWidget->addWidget(addSourceWidget);
+
+    setCentralWidget(stackedWidget);
+
+    connect(menuBar->findChild<QAction*>("addNewSource"), &QAction::triggered, this, &MainWindow::showAddSourceWidget);
+    
+    showDefaultWidget();
+}
+
+void MainWindow::showDefaultWidget() {
+    stackedWidget->setCurrentWidget(defaultWidget);
+}
+
+void MainWindow::showAddSourceWidget() {
+    stackedWidget->setCurrentWidget(addSourceWidget);
 }
