@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
     src/classes/MainWindow.cpp
     src/classes/MainWindow.h
+    assets/resources.qrc
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
