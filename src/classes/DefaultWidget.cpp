@@ -10,7 +10,7 @@ DefaultWidget::DefaultWidget(QWidget* parent) : QWidget(parent), pixmap(":/image
     layout->addWidget(frameLabel);
 
     pal = palette();
-    pal.setColor(QPalette::Window, QColor(244, 240, 238));
+    pal.setColor(QPalette::Window, Colours::background);
     setAutoFillBackground(true);
     setPalette(pal);
 

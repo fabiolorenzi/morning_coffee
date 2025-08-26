@@ -2,8 +2,8 @@
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowFlags(Qt::Window);
-    setMinimumSize(500, 400);
-    resize(500, 400);
+    setMinimumSize(Sizes::minWidth, Sizes::minHeight);
+    resize(Sizes::minWidth, Sizes::minHeight);
 
     setWindowTitle("Morning Coffee");
 

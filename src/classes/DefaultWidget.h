@@ -4,6 +4,8 @@
 #include <QVBoxLayout>
 #include <QResizeEvent>
 
+#include "../constants/Colours.h"
+
 class DefaultWidget : public QWidget {
     Q_OBJECT
 

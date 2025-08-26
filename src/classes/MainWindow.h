@@ -4,6 +4,8 @@
 #include <QLabel>
 #include "DefaultWidget.h"
 
+#include "../constants/Sizes.h"
+
 class MainWindow: public QMainWindow {
     Q_OBJECT
 
