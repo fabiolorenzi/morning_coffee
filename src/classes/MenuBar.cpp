@@ -41,9 +41,7 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
     connect(tutorialAction, &QAction::triggered, this, [this]() {
         QMessageBox::about(this, "tutorialAction", "function worked");
     });
-    connect(githubAction, &QAction::triggered, this, [this]() {
-        QMessageBox::about(this, "githubAction", "function worked");
-    });
+    connect(githubAction, &QAction::triggered, this, &MenuBar::githubRedirect);
 
     fileMenu->addAction(addNewSourceAction);
     fileMenu->addAction(manageSourcesAction);
@@ -59,4 +57,8 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
     addMenu(fileMenu);
     addMenu(viewMenu);
     addMenu(helpMenu);
+}
+
+void MenuBar::githubRedirect() {
+    QDesktopServices::openUrl(QUrl("https://github.com/fabiolorenzi/morning_coffee.git"));
 }

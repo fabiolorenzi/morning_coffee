@@ -1,9 +1,11 @@
 #pragma once
 
 #include <QAction>
+#include <QDesktopServices>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QUrl>
 
 class MenuBar : public QMenuBar {
     Q_OBJECT
@@ -26,4 +28,6 @@ class MenuBar : public QMenuBar {
         QAction* aboutAction;
         QAction* tutorialAction;
         QAction* githubAction;
+
+        void githubRedirect();
 };
