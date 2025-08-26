@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QLabel>
 #include "DefaultWidget.h"
+#include "MenuBar.h"
 
 #include "../constants/Sizes.h"
 
@@ -12,6 +12,6 @@ class MainWindow: public QMainWindow {
     public:
         explicit MainWindow(QWidget* parent = nullptr);
     private:
-        QLabel* frameLabel;
+        MenuBar* menuBar;
         DefaultWidget* defaultWidget;
 };

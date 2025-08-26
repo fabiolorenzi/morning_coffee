@@ -18,6 +18,8 @@ add_executable(${PROJECT_NAME}
     src/classes/DefaultWidget.h
     src/classes/MainWindow.cpp
     src/classes/MainWindow.h
+    src/classes/MenuBar.cpp
+    src/classes/MenuBar.h
     src/constants/Colours.h
     src/constants/Sizes.h
     assets/resources.qrc
