@@ -14,6 +14,8 @@ find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
 
 add_executable(${PROJECT_NAME}
     src/main.cpp
+    src/classes/DefaultWidget.cpp
+    src/classes/DefaultWidget.h
     src/classes/MainWindow.cpp
     src/classes/MainWindow.h
     assets/resources.qrc

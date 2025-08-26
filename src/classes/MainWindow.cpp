@@ -1,11 +1,12 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
+    setWindowFlags(Qt::Window);
+    setMinimumSize(500, 400);
+    resize(500, 400);
+
     setWindowTitle("Morning Coffee");
 
-    QLabel* label = new QLabel("Hello world", this);
-    label->setAlignment(Qt::AlignCenter);
-    setCentralWidget(label);
-
-    resize(500, 400);
+    defaultWidget = new DefaultWidget(this);
+    setCentralWidget(defaultWidget);
 }
