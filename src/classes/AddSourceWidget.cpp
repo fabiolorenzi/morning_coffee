@@ -54,7 +54,9 @@ void AddSourceWidget::submitForm() {
         return;
     }
 
-    if (!QUrl(url).isValid()) {
+    QUrl urlValue = url.trimmed();
+
+    if (!urlValue.isValid() || urlValue.scheme().isEmpty()) {
         formMessage->setMessage("The URL inserted is not valid", MessageType::Fail);
         manageButton(false);
         return;
