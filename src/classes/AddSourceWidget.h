@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+#include "../classes/Button.h"
 #include "../functions/ManageColours.h"
 
 class AddSourceWidget : public QWidget {
@@ -26,6 +27,6 @@ class AddSourceWidget : public QWidget {
         QLineEdit* urlInput;
         QComboBox* typeSelect;
         QHBoxLayout* buttonLine;
-        QPushButton* clearButton;
-        QPushButton* submitButton;
+        Button* clearButton;
+        Button* submitButton;
 };

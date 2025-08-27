@@ -8,8 +8,8 @@ AddSourceWidget::AddSourceWidget(QWidget* parent) {
     nameInput = new QLineEdit(this);
     urlInput = new QLineEdit(this);
     typeSelect = new QComboBox(this);
-    clearButton = new QPushButton("Cancel", this);
-    submitButton = new QPushButton("Add", this);
+    clearButton = new Button("Cancel", ButtonType::Secondary, this);
+    submitButton = new Button("Add", ButtonType::Primary, this);
 
     typeSelect->addItems({"-----", "Blog", "Youtube channel", "Patreon"});
 
