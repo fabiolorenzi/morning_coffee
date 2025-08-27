@@ -1,7 +1,10 @@
 #pragma once
 
 #include <QWidget>
-#include <QLabel>
+#include <QComboBox>
+#include <QFormLayout>
+#include <QLineEdit>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 class AddSourceWidget : public QWidget {
@@ -10,7 +13,17 @@ class AddSourceWidget : public QWidget {
     public:
         explicit AddSourceWidget(QWidget* parent = nullptr);
 
+    private slots:
+        void clearForm();
+        void submitForm();
+
     private:
-        QVBoxLayout* layout;
-        QLabel* frameLabel;
+        QVBoxLayout* mainLayout;
+        QFormLayout* formLayout;
+        QLineEdit* nameInput;
+        QLineEdit* urlInput;
+        QComboBox* typeSelect;
+        QHBoxLayout* buttonLine;
+        QPushButton* clearButton;
+        QPushButton* submitButton;
 };
