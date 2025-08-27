@@ -1,5 +1,5 @@
 #pragma once
 
 namespace FontSizes {
-    inline const int spinnerSize = 500;
+    inline const int spinnerSize = 16;
 };

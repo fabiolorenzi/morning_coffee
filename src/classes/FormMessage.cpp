@@ -7,11 +7,9 @@ FormMessage::FormMessage(QWidget* parent) : QWidget(parent) {
     spinner = new Spinner(this);
     spinner->hide();
 
-    layout->addWidget(spinner);
-    layout->addWidget(message);
+    layout->addWidget(message, 1, Qt::AlignRight);
+    layout->addWidget(spinner, 0, Qt::AlignVCenter);
     layout->setContentsMargins(0, 10, 0, 0);
-
-    message->setAlignment(Qt::AlignRight);
 
     setLayout(layout);
     setVisible(false);
@@ -38,6 +36,7 @@ void FormMessage::clearMessage() {
 }
 
 void FormMessage::manageSpinner(bool show) {
+    setVisible(show);
     if (show) {
         spinner->start();
     } else {

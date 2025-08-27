@@ -1,5 +1,7 @@
 #include "AddSourceWidget.h"
 
+#include <QTimer>
+
 AddSourceWidget::AddSourceWidget(QWidget* parent) {
     mainLayout = new QVBoxLayout(this);
     formLayout = new QFormLayout;
@@ -42,7 +44,7 @@ void AddSourceWidget::clearForm() {
 
 void AddSourceWidget::submitForm() {
     formMessage->clearMessage();
-    manageButton(true);
+    disableButtons(true);
 
     QString name = nameInput->text().trimmed();
     QString url = urlInput->text().trimmed();
@@ -50,7 +52,7 @@ void AddSourceWidget::submitForm() {
 
     if (name.isEmpty() || url.isEmpty() || type == "-----") {
         formMessage->setMessage("Please compile all the inputs", MessageType::Fail);
-        manageButton(false);
+        disableButtons(false);
         return;
     }
 
@@ -58,14 +60,21 @@ void AddSourceWidget::submitForm() {
 
     if (!urlValue.isValid() || urlValue.scheme().isEmpty()) {
         formMessage->setMessage("The URL inserted is not valid", MessageType::Fail);
-        manageButton(false);
+        disableButtons(false);
         return;
     }
 
     formMessage->manageSpinner(true);
+
+    QTimer::singleShot(2000, [this]() {
+        // Simulate processing or real submission
+        formMessage->manageSpinner(false);  // stop spinner
+        formMessage->setMessage("Form submitted successfully!", MessageType::Success);
+        disableButtons(false);
+    });
 }
 
-void AddSourceWidget::manageButton(bool disable) {
+void AddSourceWidget::disableButtons(bool disable) {
     clearButton->setDisabled(disable);
     submitButton->setDisabled(disable);
 }

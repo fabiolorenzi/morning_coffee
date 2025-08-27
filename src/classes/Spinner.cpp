@@ -28,7 +28,7 @@ void Spinner::paintEvent(QPaintEvent* event) {
     p.translate(radius, radius);
 
     for (int i = 0; i < lineCount; ++i) {
-        QColor color = Qt::gray;
+        QColor color = Colours::darkGrey;
         color.setAlphaF(1.0 - (i / (float)lineCount));
         p.setPen(Qt::NoPen);
         p.setBrush(color);

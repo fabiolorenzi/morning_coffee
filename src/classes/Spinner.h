@@ -5,6 +5,7 @@
 #include <QtMath>
 #include <QWidget>
 
+#include "../constants/Colours.h"
 #include "../constants/FontSizes.h"
 
 class Spinner : public QWidget {

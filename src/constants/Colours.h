@@ -16,4 +16,5 @@ namespace Colours {
     inline const QColor successColour = QColor(34, 139, 34);
     inline const QColor failureColour = QColor(178, 34, 34);
     inline const QColor shadow = QColor(0, 0, 0, 77);
+    inline const QColor darkGrey = QColor(20, 20, 20);
 };

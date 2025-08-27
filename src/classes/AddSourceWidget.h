@@ -33,5 +33,5 @@ class AddSourceWidget : public QWidget {
         Button* clearButton;
         Button* submitButton;
 
-        void manageButton(bool disable);
+        void disableButtons(bool disable);
 };
