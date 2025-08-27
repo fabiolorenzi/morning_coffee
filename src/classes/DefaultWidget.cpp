@@ -9,7 +9,7 @@ DefaultWidget::DefaultWidget(QWidget* parent) : QWidget(parent), pixmap(":/image
 
     layout->addWidget(frameLabel);
 
-    ManageColours::SetBackgroundColour(*this);
+    WidgetHelper::SetBackgroundColour(*this);
 
     frameLabel->setPixmap(pixmap.scaled(frameLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }

@@ -21,7 +21,7 @@ add_executable(${PROJECT_NAME}
     src/classes/MainWindow.cpp
     src/classes/MenuBar.cpp
     src/classes/Spinner.cpp
-    src/functions/ManageColours.cpp
+    src/functions/WidgetHelper.cpp
     assets/resources.qrc
 )
 

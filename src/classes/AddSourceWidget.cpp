@@ -30,7 +30,7 @@ AddSourceWidget::AddSourceWidget(QWidget* parent) {
 
     setLayout(mainLayout);
 
-    ManageColours::SetBackgroundColour(*this);
+    WidgetHelper::SetBackgroundColour(*this);
 
     connect(clearButton, &QPushButton::clicked, this, &AddSourceWidget::clearForm);
     connect(submitButton, &QPushButton::clicked, this, &AddSourceWidget::submitForm);

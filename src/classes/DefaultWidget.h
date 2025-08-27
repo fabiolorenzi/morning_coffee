@@ -1,10 +1,11 @@
 #pragma once
-#include <QWidget>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QResizeEvent>
 
-#include "../functions/ManageColours.h"
+#include <QLabel>
+#include <QResizeEvent>
+#include <QVBoxLayout>
+#include <QWidget>
+
+#include "../functions/WidgetHelper.h"
 
 class DefaultWidget : public QWidget {
     Q_OBJECT

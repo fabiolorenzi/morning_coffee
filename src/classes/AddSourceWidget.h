@@ -10,7 +10,7 @@
 
 #include "Button.h"
 #include "FormMessage.h"
-#include "../functions/ManageColours.h"
+#include "../functions/WidgetHelper.h"
 
 class AddSourceWidget : public QWidget {
     Q_OBJECT

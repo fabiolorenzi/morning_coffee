@@ -1,6 +1,6 @@
-#include "ManageColours.h"
+#include "WidgetHelper.h"
 
-void ManageColours::SetBackgroundColour(QWidget& widget) {
+void WidgetHelper::SetBackgroundColour(QWidget& widget) {
     QPalette pal = widget.palette();
     pal.setColor(QPalette::Window, Colours::background);
     widget.setAutoFillBackground(true);

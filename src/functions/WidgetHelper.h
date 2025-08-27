@@ -5,6 +5,6 @@
 
 #include "../constants/Colours.h"
 
-namespace ManageColours {
+namespace WidgetHelper {
     void SetBackgroundColour(QWidget& widget);
 }
