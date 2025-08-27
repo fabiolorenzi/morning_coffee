@@ -18,11 +18,17 @@ Button::Button(QString text, ButtonType type, QWidget* parent) : QPushButton(tex
                 "QPushButton:pressed {"
                 " background-color: %4;"
                 "}"
+                "QPushButton:disabled {"
+                " background-color: %5;"
+                " color: %6;"
+                "}"
             ).arg(
                 Colours::primaryButton.name(),
                 Colours::buttonText.name(),
-                Colours::primaryButtonHover.name(),
-                Colours::primaryButtonPressed.name()
+                Colours::primaryButton.darker(120).name(),
+                Colours::primaryButton.darker(150).name(),
+                Colours::primaryButton.lighter(150).name(),
+                Colours::buttonText.lighter(150).name()
             );
             break;
         case ButtonType::Secondary:
@@ -39,11 +45,17 @@ Button::Button(QString text, ButtonType type, QWidget* parent) : QPushButton(tex
                 "QPushButton:pressed {"
                 " background-color: %4;"
                 "}"
+                "QPushButton:disabled {"
+                " background-color: %5;"
+                " color: %6;"
+                "}"
             ).arg(
                 Colours::secondaryButton.name(),
                 Colours::buttonText.name(),
-                Colours::secondaryButtonHover.name(),
-                Colours::secondaryButtonPressed.name()
+                Colours::secondaryButton.darker(120).name(),
+                Colours::secondaryButton.darker(150).name(),
+                Colours::secondaryButton.lighter(150).name(),
+                Colours::buttonText.lighter(150).name()
             );
             break;
     };
