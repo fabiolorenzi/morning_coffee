@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+#include "../functions/ManageColours.h"
+
 class AddSourceWidget : public QWidget {
     Q_OBJECT
 

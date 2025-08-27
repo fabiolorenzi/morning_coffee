@@ -4,7 +4,7 @@
 #include <QVBoxLayout>
 #include <QResizeEvent>
 
-#include "../constants/Colours.h"
+#include "../functions/ManageColours.h"
 
 class DefaultWidget : public QWidget {
     Q_OBJECT
@@ -19,5 +19,4 @@ class DefaultWidget : public QWidget {
         QVBoxLayout* layout;
         QLabel* frameLabel;
         QPixmap pixmap;
-        QPalette pal;
 };
