@@ -40,11 +40,12 @@ void AddSourceWidget::clearForm() {
     nameInput->clear();
     urlInput->clear();
     typeSelect->setCurrentIndex(0);
+    formMessage->clearMessage();
 }
 
 void AddSourceWidget::submitForm() {
     formMessage->clearMessage();
-    disableButtons(true);
+    disableInputs(true);
 
     QString name = nameInput->text().trimmed();
     QString url = urlInput->text().trimmed();
@@ -52,7 +53,7 @@ void AddSourceWidget::submitForm() {
 
     if (name.isEmpty() || url.isEmpty() || type == "-----") {
         formMessage->setMessage("Please compile all the inputs", MessageType::Fail);
-        disableButtons(false);
+        disableInputs(false);
         return;
     }
 
@@ -60,7 +61,7 @@ void AddSourceWidget::submitForm() {
 
     if (!urlValue.isValid() || urlValue.scheme().isEmpty()) {
         formMessage->setMessage("The URL inserted is not valid", MessageType::Fail);
-        disableButtons(false);
+        disableInputs(false);
         return;
     }
 
@@ -70,11 +71,14 @@ void AddSourceWidget::submitForm() {
         // Simulate processing or real submission
         formMessage->manageSpinner(false);  // stop spinner
         formMessage->setMessage("Form submitted successfully!", MessageType::Success);
-        disableButtons(false);
+        disableInputs(false);
     });
 }
 
-void AddSourceWidget::disableButtons(bool disable) {
+void AddSourceWidget::disableInputs(bool disable) {
+    nameInput->setDisabled(disable);
+    urlInput->setDisabled(disable);
+    typeSelect->setDisabled(disable);
     clearButton->setDisabled(disable);
     submitButton->setDisabled(disable);
 }
