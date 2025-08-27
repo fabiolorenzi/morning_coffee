@@ -1,13 +1,15 @@
 #pragma once
 
-#include <QWidget>
 #include <QComboBox>
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QUrl>
 #include <QVBoxLayout>
+#include <QWidget>
 
-#include "../classes/Button.h"
+#include "Button.h"
+#include "FormMessage.h"
 #include "../functions/ManageColours.h"
 
 class AddSourceWidget : public QWidget {
@@ -26,7 +28,10 @@ class AddSourceWidget : public QWidget {
         QLineEdit* nameInput;
         QLineEdit* urlInput;
         QComboBox* typeSelect;
+        FormMessage* formMessage;
         QHBoxLayout* buttonLine;
         Button* clearButton;
         Button* submitButton;
+
+        void manageButton(bool disable);
 };

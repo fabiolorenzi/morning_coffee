@@ -8,6 +8,7 @@ AddSourceWidget::AddSourceWidget(QWidget* parent) {
     nameInput = new QLineEdit(this);
     urlInput = new QLineEdit(this);
     typeSelect = new QComboBox(this);
+    formMessage = new FormMessage(this);
     clearButton = new Button("Cancel", ButtonType::Secondary, this);
     submitButton = new Button("Add", ButtonType::Primary, this);
 
@@ -19,8 +20,12 @@ AddSourceWidget::AddSourceWidget(QWidget* parent) {
     buttonLine->addWidget(clearButton);
     buttonLine->addWidget(submitButton);
 
-    mainLayout->addLayout(formLayout);
-    mainLayout->addLayout(buttonLine);
+    mainLayout->addLayout(formLayout, 0);
+    mainLayout->addWidget(formMessage, 0, Qt::AlignTop);
+
+    mainLayout->addStretch(1);
+    mainLayout->addLayout(buttonLine, 0);
+
     setLayout(mainLayout);
 
     ManageColours::SetBackgroundColour(*this);
@@ -36,4 +41,29 @@ void AddSourceWidget::clearForm() {
 }
 
 void AddSourceWidget::submitForm() {
+    formMessage->clearMessage();
+    manageButton(true);
+
+    QString name = nameInput->text().trimmed();
+    QString url = urlInput->text().trimmed();
+    QString type = typeSelect->currentText();
+
+    if (name.isEmpty() || url.isEmpty() || type == "-----") {
+        formMessage->setMessage("Please compile all the inputs", MessageType::Fail);
+        manageButton(false);
+        return;
+    }
+
+    if (!QUrl(url).isValid()) {
+        formMessage->setMessage("The URL inserted is not valid", MessageType::Fail);
+        manageButton(false);
+        return;
+    }
+
+    formMessage->manageSpinner(true);
+}
+
+void AddSourceWidget::manageButton(bool disable) {
+    clearButton->setDisabled(disable);
+    submitButton->setDisabled(disable);
 }
