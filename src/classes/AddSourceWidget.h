@@ -3,12 +3,16 @@
 #include <QComboBox>
 #include <QFormLayout>
 #include <QLineEdit>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QPushButton>
 #include <QUrl>
 #include <QVBoxLayout>
 #include <QWidget>
 
 #include "Button.h"
+#include "DatabaseManager.h"
 #include "FormMessage.h"
 #include "../functions/WidgetHelper.h"
 
@@ -32,6 +36,7 @@ class AddSourceWidget : public QWidget {
         QHBoxLayout* buttonLine;
         Button* clearButton;
         Button* submitButton;
+        QNetworkAccessManager* manager;
 
         void disableInputs(bool disable);
 };

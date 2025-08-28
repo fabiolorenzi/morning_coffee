@@ -1,7 +1,5 @@
 #include "AddSourceWidget.h"
 
-#include <QTimer>
-
 AddSourceWidget::AddSourceWidget(QWidget* parent) {
     mainLayout = new QVBoxLayout(this);
     formLayout = new QFormLayout;
@@ -34,6 +32,33 @@ AddSourceWidget::AddSourceWidget(QWidget* parent) {
 
     connect(clearButton, &QPushButton::clicked, this, &AddSourceWidget::clearForm);
     connect(submitButton, &QPushButton::clicked, this, &AddSourceWidget::submitForm);
+
+    manager = new QNetworkAccessManager(this);
+
+    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply* reply) {
+        if (reply->error() != QNetworkReply::NoError) {
+            formMessage->manageSpinner(false);
+            formMessage->setMessage("The source was not found", MessageType::Fail);
+            disableInputs(false);
+            reply->deleteLater();
+            return;
+        }
+
+        bool success = DatabaseManager::instance().addSource(
+            nameInput->text().trimmed(),
+            urlInput->text().trimmed(),
+            typeSelect->currentText()
+        );
+        formMessage->manageSpinner(false);
+        if (success) {
+            formMessage->setMessage("Source added successfully", MessageType::Success);
+        } else {
+            formMessage->setMessage("Failed to add source", MessageType::Fail);
+        }
+
+        disableInputs(false);
+        reply->deleteLater();
+    });
 }
 
 void AddSourceWidget::clearForm() {
@@ -57,7 +82,7 @@ void AddSourceWidget::submitForm() {
         return;
     }
 
-    QUrl urlValue = url.trimmed();
+    QUrl urlValue(url.trimmed());
 
     if (!urlValue.isValid() || urlValue.scheme().isEmpty()) {
         formMessage->setMessage("The URL inserted is not valid", MessageType::Fail);
@@ -67,12 +92,8 @@ void AddSourceWidget::submitForm() {
 
     formMessage->manageSpinner(true);
 
-    QTimer::singleShot(2000, [this]() {
-        // Simulate processing or real submission
-        formMessage->manageSpinner(false);  // stop spinner
-        formMessage->setMessage("Form submitted successfully!", MessageType::Success);
-        disableInputs(false);
-    });
+    QNetworkRequest request(urlValue);
+    manager->get(request);
 }
 
 void AddSourceWidget::disableInputs(bool disable) {
