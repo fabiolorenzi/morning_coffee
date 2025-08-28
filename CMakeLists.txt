@@ -20,6 +20,7 @@ add_executable(${PROJECT_NAME}
     src/classes/DefaultWidget.cpp
     src/classes/FormMessage.cpp
     src/classes/MainWindow.cpp
+    src/classes/ManageSourcesWidget.cpp
     src/classes/MenuBar.cpp
     src/classes/Spinner.cpp
     src/functions/WidgetHelper.cpp

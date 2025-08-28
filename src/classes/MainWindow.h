@@ -4,6 +4,7 @@
 #include <QStackedWidget>
 #include "AddSourceWidget.h"
 #include "DefaultWidget.h"
+#include "ManageSourcesWidget.h"
 #include "MenuBar.h"
 
 #include "../constants/Sizes.h"
@@ -18,9 +19,11 @@ class MainWindow: public QMainWindow {
         MenuBar* menuBar;
         QStackedWidget* stackedWidget;
         AddSourceWidget* addSourceWidget;
+        ManageSourcesWidget* manageSourcesWidget;
         DefaultWidget* defaultWidget;
 
     private slots:
         void showDefaultWidget();
         void showAddSourceWidget();
+        void showManageSourcesWidget();
 };
