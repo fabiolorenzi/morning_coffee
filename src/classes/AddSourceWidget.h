@@ -21,6 +21,7 @@ class AddSourceWidget : public QWidget {
 
     public:
         explicit AddSourceWidget(QWidget* parent = nullptr);
+        void refreshInputs();
 
     private slots:
         void clearForm();

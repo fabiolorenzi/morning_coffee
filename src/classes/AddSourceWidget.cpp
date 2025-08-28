@@ -61,6 +61,10 @@ AddSourceWidget::AddSourceWidget(QWidget* parent) {
     });
 }
 
+void AddSourceWidget::refreshInputs() {
+    clearForm();
+}
+
 void AddSourceWidget::clearForm() {
     nameInput->clear();
     urlInput->clear();

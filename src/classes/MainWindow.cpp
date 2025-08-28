@@ -33,6 +33,7 @@ void MainWindow::showDefaultWidget() {
 
 void MainWindow::showAddSourceWidget() {
     stackedWidget->setCurrentWidget(addSourceWidget);
+    addSourceWidget->refreshInputs();
 }
 
 void MainWindow::showManageSourcesWidget() {
