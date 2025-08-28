@@ -1,9 +1,11 @@
 #include "DatabaseManager.h"
 
 DatabaseManager::DatabaseManager() {
-    QString dbPath = QCoreApplication::applicationDirPath() + "/sources.db";
+    QString dbPath = QCoreApplication::applicationDirPath() + "/data";
+    QDir().mkpath(dbPath);
+
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(dbPath);
+    db.setDatabaseName(dbPath + "/sources.db");
 
     if (!db.open()) {
         qDebug() << "Error: cannot open database - " << db.lastError().text();
