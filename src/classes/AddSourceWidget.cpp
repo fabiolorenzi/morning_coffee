@@ -30,8 +30,8 @@ AddSourceWidget::AddSourceWidget(QWidget* parent) {
 
     WidgetHelper::SetBackgroundColour(*this);
 
-    connect(clearButton, &QPushButton::clicked, this, &AddSourceWidget::clearForm);
-    connect(submitButton, &QPushButton::clicked, this, &AddSourceWidget::submitForm);
+    connect(clearButton, &Button::clicked, this, &AddSourceWidget::clearForm);
+    connect(submitButton, &Button::clicked, this, &AddSourceWidget::submitForm);
 
     manager = new QNetworkAccessManager(this);
 
