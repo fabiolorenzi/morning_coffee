@@ -5,7 +5,7 @@ DatabaseManager::DatabaseManager() {
     QDir().mkpath(dbPath);
 
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(dbPath + "/sources.db");
+    db.setDatabaseName(dbPath + "/data.db");
 
     if (!db.open()) {
         qDebug() << "Error: cannot open database - " << db.lastError().text();
@@ -13,11 +13,20 @@ DatabaseManager::DatabaseManager() {
 
     QSqlQuery query;
     query.exec(
-        "CREATE TABLE IF NOT EXISTS sources("
+        "CREATE TABLE IF NOT EXISTS sources ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "name TEXT, "
         "url TEXT UNIQUE, "
         "type TEXT)"
+    );
+
+    query.exec(
+        "CREATE TABLE IF NOT EXISTS contents ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "sourceId INTEGER NOT NULL UNIQUE, "
+        "title TEXT, "
+        "url TEXT, "
+        "FOREIGN KEY(sourceId) REFERENCES sources(id) ON DELETE CASCADE)"
     );
 }
 
@@ -71,6 +80,26 @@ QVariantMap DatabaseManager::getSourceById(int id) {
     return {};
 }
 
+QList<Source> DatabaseManager::getSourcesByType(QString type) {
+    QList<Source> sources;
+    QSqlQuery query;
+    query.prepare("SELECT id, name, url, type FROM sources WHERE type = :type");
+    query.bindValue(":type", type);
+
+    if (query.exec()) {
+        while (query.next()) {
+            Source source;
+            source.id = query.value("id").toInt();
+            source.name = query.value("name").toString();
+            source.url = query.value("url").toString();
+            source.type = query.value("type").toString();
+            sources.append(source);
+        }
+    }
+
+    return sources;
+}
+
 bool DatabaseManager::updateSource(int id, QString name, QString url, QString type) {
     QSqlQuery query;
     query.prepare("UPDATE sources SET name = ?, url = ?, type = ? WHERE id = ?");
@@ -86,4 +115,53 @@ bool DatabaseManager::removeSource(int id) {
     query.prepare("DELETE FROM sources WHERE id = ?");
     query.addBindValue(id);
     return query.exec();
+}
+
+Content DatabaseManager::getLastContent(int sourceId) {
+    Content content {-1, sourceId, "", ""};
+
+    QSqlQuery query;
+    query.prepare("SELECT id, title, url FROM contents WHERE sourceId = ?");
+    query.addBindValue(sourceId);
+    if (!query.exec() && query.next()) {
+        content.id = query.value(0).toInt();
+        content.title = query.value(1).toString();
+        content.url = query.value(2).toString();
+    }
+
+    return content;
+}
+
+bool DatabaseManager::updateLastContent(int sourceId, QString title, QString url) {
+    QSqlQuery query;
+    query.prepare("SELECT id from contents WHERE sourceId = ?");
+    query.addBindValue(sourceId);
+    if (!query.exec()) {
+        qDebug() << "Failed to query contents: " << query.lastError().text();
+        return false;
+    }
+
+    if (query.next()) {
+        QSqlQuery updateQuery;
+        updateQuery.prepare("UPDATE contents SET title = ?, url = ? WHERE sourceId = ?");
+        updateQuery.addBindValue(title);
+        updateQuery.addBindValue(url);
+        updateQuery.addBindValue(sourceId);
+        if (!updateQuery.exec()) {
+            qDebug() << "Failed to update contents: " << updateQuery.lastError().text();
+            return false;
+        }
+    } else {
+        QSqlQuery insertQuery;
+        insertQuery.prepare("INSERT INTO contents (sourceId, title, url) VALUES (?, ?, ?)");
+        insertQuery.addBindValue(sourceId);
+        insertQuery.addBindValue(title);
+        insertQuery.addBindValue(url);
+        if (!insertQuery.exec()) {
+            qDebug() << "Failed to insert content: " << insertQuery.lastError().text();
+            return false;
+        }
+    }
+
+    return true;
 }
