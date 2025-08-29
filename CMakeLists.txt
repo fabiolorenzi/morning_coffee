@@ -9,7 +9,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-list(APPEND CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/Qt6")
 find_package(Qt6 COMPONENTS Core Gui Widgets Sql Network REQUIRED)
 
 add_executable(${PROJECT_NAME}
@@ -28,8 +27,21 @@ add_executable(${PROJECT_NAME}
     assets/resources.qrc
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets Qt6::Sql Qt6::Network)
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::Sql
+        Qt6::Network
+)
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${PROJECT_SOURCE_DIR}/src
 )
+
+if(WIN32)
+    message(STATUS "Configuring for Windows")
+elseif(UNIX)
+    message(STATUS "Configuring for Unix/Linux")
+endif()
