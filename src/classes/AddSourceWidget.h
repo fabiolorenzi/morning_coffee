@@ -11,10 +11,10 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "Button.h"
-#include "DatabaseManager.h"
-#include "FormMessage.h"
-#include "../functions/WidgetHelper.h"
+#include "classes/Button.h"
+#include "classes/DatabaseManager.h"
+#include "classes/FormMessage.h"
+#include "functions/WidgetHelper.h"
 
 class AddSourceWidget : public QWidget {
     Q_OBJECT

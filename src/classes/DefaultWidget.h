@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "../functions/WidgetHelper.h"
+#include "functions/WidgetHelper.h"
 
 class DefaultWidget : public QWidget {
     Q_OBJECT

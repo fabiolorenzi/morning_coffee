@@ -5,8 +5,8 @@
 #include <QString>
 #include <QWidget>
 
-#include "Spinner.h"
-#include "../constants/Colours.h"
+#include "classes/Spinner.h"
+#include "constants/Colours.h"
 
 enum MessageType {
     Success,

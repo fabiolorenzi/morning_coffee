@@ -8,8 +8,8 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "Button.h"
-#include "DatabaseManager.h"
+#include "classes/Button.h"
+#include "classes/DatabaseManager.h"
 
 class ManageSourcesWidget : public QWidget {
     Q_OBJECT

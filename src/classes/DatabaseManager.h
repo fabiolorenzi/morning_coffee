@@ -10,8 +10,8 @@
 #include <QVariantMap>
 #include <QVector>
 
-#include "../types/Content.h"
-#include "../types/Source.h"
+#include "types/Content.h"
+#include "types/Source.h"
 
 class DatabaseManager {
     public:

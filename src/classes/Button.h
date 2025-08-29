@@ -5,7 +5,7 @@
 #include <QString>
 #include <QWidget>
 
-#include "../constants/Colours.h"
+#include "constants/Colours.h"
 
 enum ButtonType {
     Primary,

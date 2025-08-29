@@ -8,9 +8,9 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "DatabaseManager.h"
-#include "../types/Content.h"
-#include "../types/Source.h"
+#include "classes/DatabaseManager.h"
+#include "types/Content.h"
+#include "types/Source.h"
 
 class ViewNewBlogsWidget : public QWidget {
     Q_OBJECT
