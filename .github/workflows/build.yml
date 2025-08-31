@@ -1,0 +1,35 @@
+name: Build MorningCoffee
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: 6.5.0
+          host: windows
+          target: desktop
+
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_PREFIX_PATH="%Qt6_DIR%"
+          cmake --build . --config Release
+
+      - name: Deploy Qt DLLs
+        run: |
+          windeployqt build/Release/MorningCoffee.exe --no-translations --release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MorningCoffee-windows
+          path: build/Release/*
