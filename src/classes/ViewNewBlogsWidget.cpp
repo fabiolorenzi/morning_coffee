@@ -34,6 +34,12 @@ void ViewNewBlogsWidget::refreshBlogs() {
         }
     }
 
+    if (blogList->count() == 0) {
+        QListWidgetItem* item = new QListWidgetItem("No updates available", blogList);
+        item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
+        blogList->addItem(item);
+    }
+
     connect(blogList, &QListWidget::itemDoubleClicked, this, [this](QListWidgetItem* item) {
         if (item) {
             QString url = item->data(Qt::UserRole).toString();
@@ -60,7 +66,6 @@ Content ViewNewBlogsWidget::fetchLatestBlogPost(QString url) {
     if (reply->error() == QNetworkReply::NoError) {
         QString html = QString::fromUtf8(reply->readAll());
 
-        // Remove scripts and styles
         html.remove(QRegularExpression("<script[^>]*>.*?</script>", QRegularExpression::DotMatchesEverythingOption));
         html.remove(QRegularExpression("<style[^>]*>.*?</style>", QRegularExpression::DotMatchesEverythingOption));
 
