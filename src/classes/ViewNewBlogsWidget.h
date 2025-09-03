@@ -1,8 +1,13 @@
 #pragma once
 
+#include <QCryptographicHash>
 #include <QDesktopServices>
+#include <QEventLoop>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QString>
 #include <QUrl>
 #include <QVBoxLayout>
@@ -24,4 +29,5 @@ class ViewNewBlogsWidget : public QWidget {
         QListWidget* blogList;
         
         Content fetchLatestBlogPost(QString url);
+        QString hashHtml(QByteArray& html);
 };

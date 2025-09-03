@@ -23,7 +23,7 @@ class DatabaseManager {
         bool updateSource(int id, QString name, QString url, QString type);
         bool removeSource(int id);
         Content getLastContent(int sourceId);
-        bool updateLastContent(int sourceId, QString title, QString url);
+        bool updateLastContent(int sourceId, QString title, QString url, QString fingerprint);
     
     private:
         DatabaseManager();

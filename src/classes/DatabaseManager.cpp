@@ -26,6 +26,7 @@ DatabaseManager::DatabaseManager() {
         "sourceId INTEGER NOT NULL UNIQUE, "
         "title TEXT, "
         "url TEXT, "
+        "fingerprint TEXT, "
         "FOREIGN KEY(sourceId) REFERENCES sources(id) ON DELETE CASCADE)"
     );
 }
@@ -121,18 +122,19 @@ Content DatabaseManager::getLastContent(int sourceId) {
     Content content {-1, sourceId, "", ""};
 
     QSqlQuery query;
-    query.prepare("SELECT id, title, url FROM contents WHERE sourceId = ?");
+    query.prepare("SELECT id, title, url, fingerprint FROM contents WHERE sourceId = ?");
     query.addBindValue(sourceId);
-    if (!query.exec() && query.next()) {
+    if (query.exec() && query.next()) {
         content.id = query.value(0).toInt();
         content.title = query.value(1).toString();
         content.url = query.value(2).toString();
+        content.fingerprint = query.value(3).toString();
     }
 
     return content;
 }
 
-bool DatabaseManager::updateLastContent(int sourceId, QString title, QString url) {
+bool DatabaseManager::updateLastContent(int sourceId, QString title, QString url, QString fingerprint) {
     QSqlQuery query;
     query.prepare("SELECT id from contents WHERE sourceId = ?");
     query.addBindValue(sourceId);
@@ -143,9 +145,10 @@ bool DatabaseManager::updateLastContent(int sourceId, QString title, QString url
 
     if (query.next()) {
         QSqlQuery updateQuery;
-        updateQuery.prepare("UPDATE contents SET title = ?, url = ? WHERE sourceId = ?");
+        updateQuery.prepare("UPDATE contents SET title = ?, url = ?, fingerprint = ? WHERE sourceId = ?");
         updateQuery.addBindValue(title);
         updateQuery.addBindValue(url);
+        updateQuery.addBindValue(fingerprint);
         updateQuery.addBindValue(sourceId);
         if (!updateQuery.exec()) {
             qDebug() << "Failed to update contents: " << updateQuery.lastError().text();
@@ -153,10 +156,11 @@ bool DatabaseManager::updateLastContent(int sourceId, QString title, QString url
         }
     } else {
         QSqlQuery insertQuery;
-        insertQuery.prepare("INSERT INTO contents (sourceId, title, url) VALUES (?, ?, ?)");
+        insertQuery.prepare("INSERT INTO contents (sourceId, title, url, fingerprint) VALUES (?, ?, ?, ?)");
         insertQuery.addBindValue(sourceId);
         insertQuery.addBindValue(title);
         insertQuery.addBindValue(url);
+        insertQuery.addBindValue(fingerprint);
         if (!insertQuery.exec()) {
             qDebug() << "Failed to insert content: " << insertQuery.lastError().text();
             return false;

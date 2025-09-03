@@ -7,11 +7,9 @@ struct Content {
     int sourceId;
     QString title;
     QString url;
+    QString fingerprint;
 
     bool operator!=(const Content& other) const {
-        return id != other.id ||
-            sourceId != other.sourceId ||
-            title != other.title ||
-            url != other.url;
+        return fingerprint != other.fingerprint;
     }
 };
