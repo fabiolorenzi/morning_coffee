@@ -1,7 +1,5 @@
 #include "ViewNewVideosWidget.h"
 
-static const QString YOUTUBE_API_KEY = qEnvironmentVariable("YOUTUBE_API_KEY");
-
 ViewNewVideosWidget::ViewNewVideosWidget(QWidget* parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
     videoList = new QListWidget(this);
@@ -23,9 +21,6 @@ void ViewNewVideosWidget::refreshVideos() {
 
         Content latestContent = fetchLatestVideo(url);
         Content lastContent = DatabaseManager::instance().getLastContent(sourceId);
-
-        qDebug() << "Source:" << name << "Latest video fingerprint:" << latestContent.fingerprint
-                 << "Last fingerprint:" << lastContent.fingerprint;
 
         if (latestContent.fingerprint != lastContent.fingerprint) {
             DatabaseManager::instance().updateLastContent(
@@ -63,8 +58,15 @@ Content ViewNewVideosWidget::fetchLatestVideo(QString& channelUrl) {
     c.sourceId = -1;
     c.url = channelUrl;
 
+    QString apiKey = qEnvironmentVariable("YOUTUBE_API_KEY");
+    if (apiKey.isEmpty()) {
+        qDebug() << "Error: YOUTUBE_API_KEY not set in environment!";
+        c.title = "API key missing";
+        c.fingerprint = "error";
+        return c;
+    }
+
     QString channelId = resolveChannelId(channelUrl);
-    qDebug() << "Resolved channel ID for URL" << channelUrl << ":" << channelId;
 
     if (channelId.isEmpty()) {
         c.title = "Error: could not resolve channel";
@@ -74,7 +76,7 @@ Content ViewNewVideosWidget::fetchLatestVideo(QString& channelUrl) {
 
     QString apiUrl = QString(
         "https://www.googleapis.com/youtube/v3/search?key=%1&channelId=%2&part=snippet&order=date&maxResults=1"
-    ).arg(YOUTUBE_API_KEY, channelId);
+    ).arg(apiKey, channelId);
 
     QNetworkRequest request{QUrl(apiUrl)};
     QNetworkReply* reply = manager->get(request);
@@ -145,9 +147,11 @@ QString ViewNewVideosWidget::resolveChannelId(QString& url)
 }
 
 QString ViewNewVideosWidget::fetchChannelIdFromApi(QString& identifier, const QString& type) {
+    QString apiKey = qEnvironmentVariable("YOUTUBE_API_KEY");
+
     QString apiUrl = QString(
         "https://www.googleapis.com/youtube/v3/channels?key=%1&%2=%3&part=id"
-    ).arg(YOUTUBE_API_KEY, type, identifier);
+    ).arg(apiKey, type, identifier);
 
     QNetworkRequest request{QUrl(apiUrl)};
     QNetworkReply* reply = manager->get(request);
