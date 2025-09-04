@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     defaultWidget = new DefaultWidget(this);
     addSourceWidget = new AddSourceWidget(this);
     manageSourcesWidget = new ManageSourcesWidget(this);
+    viewSummaryWidget = new ViewSummaryWidget(this);
     viewNewBlogsWidget = new ViewNewBlogsWidget(this);
     viewNewVideosWidget = new ViewNewVideosWidget(this);
     viewNewPatreonsWidget = new ViewNewPatreonsWidget(this);
@@ -21,6 +22,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     stackedWidget->addWidget(defaultWidget);
     stackedWidget->addWidget(addSourceWidget);
     stackedWidget->addWidget(manageSourcesWidget);
+    stackedWidget->addWidget(viewSummaryWidget);
     stackedWidget->addWidget(viewNewBlogsWidget);
     stackedWidget->addWidget(viewNewVideosWidget);
     stackedWidget->addWidget(viewNewPatreonsWidget);
@@ -29,6 +31,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     connect(menuBar->findChild<QAction*>("addNewSource"), &QAction::triggered, this, &MainWindow::showAddSourceWidget);
     connect(menuBar->findChild<QAction*>("manageSources"), &QAction::triggered, this, &MainWindow::showManageSourcesWidget);
+    connect(menuBar->findChild<QAction*>("viewSummary"), &QAction::triggered, this, &MainWindow::showViewSummaryWidget);
     connect(menuBar->findChild<QAction*>("viewNewBlogs"), &QAction::triggered, this, &MainWindow::showViewNewBlogsWidget);
     connect(menuBar->findChild<QAction*>("viewNewVideos"), &QAction::triggered, this, &MainWindow::showViewNewVideosWidget);
     connect(menuBar->findChild<QAction*>("viewNewPatreons"), &QAction::triggered, this, &MainWindow::showViewNewPatreonsWidget);
@@ -48,6 +51,11 @@ void MainWindow::showAddSourceWidget() {
 void MainWindow::showManageSourcesWidget() {
     stackedWidget->setCurrentWidget(manageSourcesWidget);
     manageSourcesWidget->refreshSources();
+}
+
+void MainWindow::showViewSummaryWidget() {
+    stackedWidget->setCurrentWidget(viewSummaryWidget);
+    viewSummaryWidget->refresh();
 }
 
 void MainWindow::showViewNewBlogsWidget() {

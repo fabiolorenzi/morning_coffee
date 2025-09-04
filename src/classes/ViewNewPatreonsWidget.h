@@ -20,6 +20,7 @@ class ViewNewPatreonsWidget : public QWidget {
 public:
     explicit ViewNewPatreonsWidget(QWidget* parent = nullptr);
     void refreshPosts();
+    bool hasUpdates();
 
 private:
     QVBoxLayout* layout;

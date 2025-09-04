@@ -21,6 +21,7 @@ class ViewNewVideosWidget : public QWidget {
     public:
         explicit ViewNewVideosWidget(QWidget* parent = nullptr);
         void refreshVideos();
+        bool hasUpdates();
     
     private:
         QVBoxLayout* layout;

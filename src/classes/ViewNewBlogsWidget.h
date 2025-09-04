@@ -23,6 +23,7 @@ class ViewNewBlogsWidget : public QWidget {
     public:
         explicit ViewNewBlogsWidget(QWidget* parent = nullptr);
         void refreshBlogs();
+        bool hasUpdates();
 
     private:
         QVBoxLayout* layout;

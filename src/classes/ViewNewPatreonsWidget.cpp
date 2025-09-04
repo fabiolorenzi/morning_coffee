@@ -56,6 +56,27 @@ void ViewNewPatreonsWidget::refreshPosts() {
     });
 }
 
+bool ViewNewPatreonsWidget::hasUpdates() {
+    QList<Source> sources = DatabaseManager::instance().getSourcesByType("Patreon");
+
+    for (Source& source : sources) {
+        QString url = source.url;
+        Content latestContent = fetchLatestPost(url);
+        Content lastContent = DatabaseManager::instance().getLastContent(source.id);
+
+        bool firstRun = lastContent.fingerprint.isEmpty() || lastContent.fingerprint == "none";
+        if (firstRun || latestContent.fingerprint != lastContent.fingerprint) {
+            return true;
+        }
+    }
+
+    if (sources.size() == 0) {
+        return true;
+    }
+
+    return false;
+}
+
 Content ViewNewPatreonsWidget::fetchLatestPost(QString& pageUrl) {
     Content c;
     c.id = -1;

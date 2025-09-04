@@ -19,9 +19,7 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
     addNewSourceAction->setObjectName("addNewSource");
     manageSourcesAction->setObjectName("manageSources");
     connect(exitAction, &QAction::triggered, parent, &QWidget::close);
-    connect(viewSummaryAction, &QAction::triggered, this, [this]() {
-        QMessageBox::about(this, "viewSummaryAction", "function worked");
-    });
+    viewSummaryAction->setObjectName("viewSummary");
     viewNewBlogsAction->setObjectName("viewNewBlogs");
     viewNewVideosAction->setObjectName("viewNewVideos");
     viewNewPatreonsAction->setObjectName("viewNewPatreons");

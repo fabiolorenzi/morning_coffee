@@ -52,6 +52,27 @@ void ViewNewVideosWidget::refreshVideos() {
     });
 }
 
+bool ViewNewVideosWidget::hasUpdates() {
+    QList<Source> sources = DatabaseManager::instance().getSourcesByType("YouTube channel");
+
+    for (Source& source : sources) {
+        QString url = source.url;
+        Content latestContent = fetchLatestVideo(url);
+        Content lastContent = DatabaseManager::instance().getLastContent(source.id);
+
+        bool firstRun = lastContent.fingerprint.isEmpty() || lastContent.fingerprint == "none";
+        if (firstRun || latestContent.fingerprint != lastContent.fingerprint) {
+            return true;
+        }
+    }
+
+    if (sources.size() == 0) {
+        return true;
+    }
+
+    return false;
+}
+
 Content ViewNewVideosWidget::fetchLatestVideo(QString& channelUrl) {
     Content c;
     c.id = -1;

@@ -48,6 +48,27 @@ void ViewNewBlogsWidget::refreshBlogs() {
     });
 }
 
+bool ViewNewBlogsWidget::hasUpdates() {
+    QList<Source> sources = DatabaseManager::instance().getSourcesByType("Blog");
+
+    for (Source& source : sources) {
+        QString url = source.url;
+        Content latestContent = fetchLatestBlogPost(url);
+        Content lastContent = DatabaseManager::instance().getLastContent(source.id);
+
+        bool firstRun = lastContent.fingerprint.isEmpty() || lastContent.fingerprint == "none";
+        if (firstRun || latestContent.fingerprint != lastContent.fingerprint) {
+            return true;
+        }
+    }
+
+    if (sources.size() == 0) {
+        return true;
+    }
+
+    return false;
+}
+
 Content ViewNewBlogsWidget::fetchLatestBlogPost(QString url) {
     QNetworkAccessManager manager;
     QNetworkRequest request{QUrl(url)};
