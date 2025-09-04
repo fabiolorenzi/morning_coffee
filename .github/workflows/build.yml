@@ -7,8 +7,6 @@ on:
 jobs:
   build-linux:
     runs-on: ubuntu-22.04
-    env:
-      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +25,8 @@ jobs:
           target: desktop
 
       - name: Build
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |
           mkdir -p build
           cd build
@@ -67,8 +67,6 @@ jobs:
 
   build-windows:
     runs-on: windows-latest
-    env:
-      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -80,6 +78,8 @@ jobs:
           target: desktop
 
       - name: Build
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |
           mkdir build
           cd build
