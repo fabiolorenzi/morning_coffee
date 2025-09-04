@@ -12,7 +12,7 @@ AddSourceWidget::AddSourceWidget(QWidget* parent) {
     clearButton = new Button("Cancel", ButtonType::Secondary, this);
     submitButton = new Button("Add", ButtonType::Primary, this);
 
-    typeSelect->addItems({"-----", "Blog", "Youtube channel", "Patreon"});
+    typeSelect->addItems({"-----", "Blog", "YouTube channel", "Patreon"});
 
     formLayout->addRow("Name:", nameInput);
     formLayout->addRow("URL:", urlInput);

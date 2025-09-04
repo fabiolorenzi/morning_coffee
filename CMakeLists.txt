@@ -23,6 +23,7 @@ add_executable(${PROJECT_NAME}
     src/classes/MenuBar.cpp
     src/classes/Spinner.cpp
     src/classes/ViewNewBlogsWidget.cpp
+    src/classes/ViewNewVideosWidget.cpp
     src/functions/WidgetHelper.cpp
     assets/resources.qrc
 )

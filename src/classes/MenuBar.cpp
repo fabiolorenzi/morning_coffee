@@ -23,9 +23,7 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
         QMessageBox::about(this, "viewSummaryAction", "function worked");
     });
     viewNewBlogsAction->setObjectName("viewNewBlogs");
-    connect(viewNewVideosAction, &QAction::triggered, this, [this]() {
-        QMessageBox::about(this, "viewNewVideosAction", "function worked");
-    });
+    viewNewVideosAction->setObjectName("viewNewVideos");
     connect(viewNewPatreonsAction, &QAction::triggered, this, [this]() {
         QMessageBox::about(this, "viewNewPatreonAction", "function worked");
     });

@@ -63,7 +63,7 @@ void ManageSourcesWidget::handleUpdate(int id) {
     if (!ok || newName.isEmpty()) return;
     QString newUrl = QInputDialog::getText(this, "Update source", "Enter new URL:", QLineEdit::Normal, source["url"].toString(), &ok);
     if (!ok || newUrl.isEmpty()) return;
-    QString newType = QInputDialog::getItem(this, "Update source", "Select type:", {"Blog", "Youtube", "Patreon"}, 0, false, &ok);
+    QString newType = QInputDialog::getItem(this, "Update source", "Select type:", {"Blog", "YouTube channel", "Patreon"}, 0, false, &ok);
     if (!ok || newType.isEmpty()) return;
 
     if (DatabaseManager::instance().updateSource(id, newName, newUrl, newType)) {

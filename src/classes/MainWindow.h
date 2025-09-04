@@ -7,6 +7,7 @@
 #include "ManageSourcesWidget.h"
 #include "MenuBar.h"
 #include "ViewNewBlogsWidget.h"
+#include "ViewNewVideosWidget.h"
 
 #include "constants/Sizes.h"
 
@@ -23,10 +24,12 @@ class MainWindow: public QMainWindow {
         ManageSourcesWidget* manageSourcesWidget;
         DefaultWidget* defaultWidget;
         ViewNewBlogsWidget* viewNewBlogsWidget;
+        ViewNewVideosWidget* viewNewVideosWidget;
 
     private slots:
         void showDefaultWidget();
         void showAddSourceWidget();
         void showManageSourcesWidget();
         void showViewNewBlogsWidget();
+        void showViewNewVideosWidget();
 };

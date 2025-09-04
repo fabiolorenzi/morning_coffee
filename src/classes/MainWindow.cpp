@@ -15,17 +15,20 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     addSourceWidget = new AddSourceWidget(this);
     manageSourcesWidget = new ManageSourcesWidget(this);
     viewNewBlogsWidget = new ViewNewBlogsWidget(this);
+    viewNewVideosWidget = new ViewNewVideosWidget(this);
 
     stackedWidget->addWidget(defaultWidget);
     stackedWidget->addWidget(addSourceWidget);
     stackedWidget->addWidget(manageSourcesWidget);
     stackedWidget->addWidget(viewNewBlogsWidget);
+    stackedWidget->addWidget(viewNewVideosWidget);
 
     setCentralWidget(stackedWidget);
 
     connect(menuBar->findChild<QAction*>("addNewSource"), &QAction::triggered, this, &MainWindow::showAddSourceWidget);
     connect(menuBar->findChild<QAction*>("manageSources"), &QAction::triggered, this, &MainWindow::showManageSourcesWidget);
     connect(menuBar->findChild<QAction*>("viewNewBlogs"), &QAction::triggered, this, &MainWindow::showViewNewBlogsWidget);
+    connect(menuBar->findChild<QAction*>("viewNewVideos"), &QAction::triggered, this, &MainWindow::showViewNewVideosWidget);
     
     showDefaultWidget();
 }
@@ -47,4 +50,9 @@ void MainWindow::showManageSourcesWidget() {
 void MainWindow::showViewNewBlogsWidget() {
     stackedWidget->setCurrentWidget(viewNewBlogsWidget);
     viewNewBlogsWidget->refreshBlogs();
+}
+
+void MainWindow::showViewNewVideosWidget() {
+    stackedWidget->setCurrentWidget(viewNewVideosWidget);
+    viewNewVideosWidget->refreshVideos();
 }
