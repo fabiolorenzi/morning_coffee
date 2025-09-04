@@ -15,11 +15,9 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
     src/classes/AddSourceWidget.cpp
     src/classes/Button.cpp
-    src/classes/ClickableLabel.cpp
     src/classes/DatabaseManager.cpp
     src/classes/DefaultWidget.cpp
     src/classes/FormMessage.cpp
-    src/classes/LambdaWorker.cpp
     src/classes/MainWindow.cpp
     src/classes/ManageSourcesWidget.cpp
     src/classes/MenuBar.cpp

@@ -35,6 +35,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     connect(menuBar->findChild<QAction*>("viewNewBlogs"), &QAction::triggered, this, &MainWindow::showViewNewBlogsWidget);
     connect(menuBar->findChild<QAction*>("viewNewVideos"), &QAction::triggered, this, &MainWindow::showViewNewVideosWidget);
     connect(menuBar->findChild<QAction*>("viewNewPatreons"), &QAction::triggered, this, &MainWindow::showViewNewPatreonsWidget);
+
+    connect(viewSummaryWidget, &ViewSummaryWidget::openWidget, this, [this](const QString& type) {
+        if (type == "blogs") {
+            showViewNewBlogsWidget();
+        } else if (type == "videos") {
+            showViewNewVideosWidget();
+        } else if (type == "patreons") {
+            showViewNewPatreonsWidget();
+        }
+    });
     
     showDefaultWidget();
 }

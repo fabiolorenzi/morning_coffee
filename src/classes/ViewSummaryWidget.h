@@ -1,12 +1,13 @@
 #pragma once
 
 #include <QWidget>
+#include <QListWidget>
 #include <QVBoxLayout>
-#include <QPointer>
-#include <QThreadPool>
+#include <QFutureWatcher>
+#include <QtConcurrent/QtConcurrent>
+#include <QDesktopServices>
+#include <QUrl>
 
-#include "classes/ClickableLabel.h"
-#include "classes/LambdaWorker.h"
 #include "classes/ViewNewBlogsWidget.h"
 #include "classes/ViewNewVideosWidget.h"
 #include "classes/ViewNewPatreonsWidget.h"
@@ -18,21 +19,12 @@ class ViewSummaryWidget : public QWidget {
         explicit ViewSummaryWidget(QWidget* parent = nullptr);
         void refresh();
 
+    signals:
+        void openWidget(const QString& type);
+
     private:
         QVBoxLayout* layout;
-        ClickableLabel* blogsLabel;
-        ClickableLabel* videosLabel;
-        ClickableLabel* patreonsLabel;
+        QListWidget* summaryList;
 
-        QPointer<ViewNewBlogsWidget> blogsWidget;
-        QPointer<ViewNewVideosWidget> videosWidget;
-        QPointer<ViewNewPatreonsWidget> patreonsWidget;
-        QThreadPool* threadPool;
-
-        void checkBlogs();
-        void checkVideos();
-        void checkPatreons();
-
-    signals:
-        void updateLabel(ClickableLabel* label, const QString& text);
+        void addItem(const QString& text, const QString& type);
 };

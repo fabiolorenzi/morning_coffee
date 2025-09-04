@@ -2,61 +2,84 @@
 
 ViewSummaryWidget::ViewSummaryWidget(QWidget* parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
+    summaryList = new QListWidget(this);
 
-    blogsLabel = new ClickableLabel("Checking for new blogs...");
-    videosLabel = new ClickableLabel("Checking for new videos...");
-    patreonsLabel = new ClickableLabel("Checking for new posts...");
-
-    layout->addWidget(blogsLabel);
-    layout->addWidget(videosLabel);
-    layout->addWidget(patreonsLabel);
-
+    layout->addWidget(summaryList);
     setLayout(layout);
 
-    videosWidget = new ViewNewVideosWidget();
-    blogsWidget = new ViewNewBlogsWidget();
-    patreonsWidget = new ViewNewPatreonsWidget();
-
-    threadPool = QThreadPool::globalInstance();
-
-    connect(videosLabel, &ClickableLabel::clicked, this, [this]() { videosWidget->show(); });
-    connect(blogsLabel, &ClickableLabel::clicked, this, [this]() { blogsWidget->show(); });
-    connect(patreonsLabel, &ClickableLabel::clicked, this, [this]() { patreonsWidget->show(); });
-
-    connect(this, &ViewSummaryWidget::updateLabel, this, [this](ClickableLabel* label, const QString& text) {
-        label->setText(text);
+    connect(summaryList, &QListWidget::itemDoubleClicked, this, [this](QListWidgetItem* item) {
+        if (!item) return;
+        QString type = item->data(Qt::UserRole).toString();
+        emit openWidget(type);
     });
 }
 
 void ViewSummaryWidget::refresh() {
-    checkBlogs();
-    checkVideos();
-    checkPatreons();
+    summaryList->clear();
+
+    addItem("Checking blogs...", "blogs");
+    addItem("Checking videos...", "videos");
+    addItem("Checking patreons...", "patreons");
+
+    QFuture<bool> blogsFuture = QtConcurrent::run([] {
+        ViewNewBlogsWidget blogsCheck;
+        return blogsCheck.hasUpdates();
+    });
+
+    QFuture<bool> videosFuture = QtConcurrent::run([] {
+        ViewNewVideosWidget videosCheck;
+        return videosCheck.hasUpdates();
+    });
+
+    QFuture<bool> patreonsFuture = QtConcurrent::run([] {
+        ViewNewPatreonsWidget patreonsCheck;
+        return patreonsCheck.hasUpdates();
+    });
+
+    auto blogsWatcher = new QFutureWatcher<bool>(this);
+    auto videosWatcher = new QFutureWatcher<bool>(this);
+    auto patreonsWatcher = new QFutureWatcher<bool>(this);
+
+    connect(blogsWatcher, &QFutureWatcher<bool>::finished, this, [=]() {
+        bool result = blogsWatcher->result();
+        for (int i = 0; i < summaryList->count(); ++i) {
+            auto* item = summaryList->item(i);
+            if (item->data(Qt::UserRole).toString() == "blogs") {
+                item->setText(result ? "New blogs available" : "No blog updates");
+            }
+        }
+        blogsWatcher->deleteLater();
+    });
+
+    connect(videosWatcher, &QFutureWatcher<bool>::finished, this, [=]() {
+        bool result = videosWatcher->result();
+        for (int i = 0; i < summaryList->count(); ++i) {
+            auto* item = summaryList->item(i);
+            if (item->data(Qt::UserRole).toString() == "videos") {
+                item->setText(result ? "New videos available" : "No video updates");
+            }
+        }
+        videosWatcher->deleteLater();
+    });
+
+    connect(patreonsWatcher, &QFutureWatcher<bool>::finished, this, [=]() {
+        bool result = patreonsWatcher->result();
+        for (int i = 0; i < summaryList->count(); ++i) {
+            auto* item = summaryList->item(i);
+            if (item->data(Qt::UserRole).toString() == "patreons") {
+                item->setText(result ? "New Patreon posts available" : "No Patreon updates");
+            }
+        }
+        patreonsWatcher->deleteLater();
+    });
+
+    blogsWatcher->setFuture(blogsFuture);
+    videosWatcher->setFuture(videosFuture);
+    patreonsWatcher->setFuture(patreonsFuture);
 }
 
-void ViewSummaryWidget::checkBlogs() {
-    auto worker = new LambdaWorker([this]() {
-        bool updates = blogsWidget->hasUpdates();
-        QString text = updates > 0 ? "New blogs available" : "No blog updates";
-        emit updateLabel(blogsLabel, text);
-    });
-    threadPool->start(worker);
-}
-
-void ViewSummaryWidget::checkVideos() {
-    auto worker = new LambdaWorker([this]() {
-        bool updates = videosWidget->hasUpdates();
-        QString text = updates > 0 ? "New videos available" : "No video updates";
-        emit updateLabel(videosLabel, text);
-    });
-    threadPool->start(worker);
-}
-
-void ViewSummaryWidget::checkPatreons() {
-    auto worker = new LambdaWorker([this]() {
-        bool updates = patreonsWidget->hasUpdates();
-        QString text = updates > 0 ? "New Patreon posts available" : "No Patreon updates";
-        emit updateLabel(patreonsLabel, text);
-    });
-    threadPool->start(worker);
+void ViewSummaryWidget::addItem(const QString& text, const QString& type) {
+    auto* item = new QListWidgetItem(text, summaryList);
+    item->setData(Qt::UserRole, type);
+    summaryList->addItem(item);
 }
