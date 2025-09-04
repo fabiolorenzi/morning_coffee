@@ -1,6 +1,6 @@
 #include "ViewNewVideosWidget.h"
 
-static const QString YOUTUBE_API_KEY = "AIzaSyDrHWIxbVE-czotJs5Yz2ge9YwPgC4ntC4";
+static const QString YOUTUBE_API_KEY = qEnvironmentVariable("YOUTUBE_API_KEY");
 
 ViewNewVideosWidget::ViewNewVideosWidget(QWidget* parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
