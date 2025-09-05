@@ -26,8 +26,14 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
     viewNewVideosAction->setObjectName("viewNewVideos");
     viewNewPatreonsAction->setObjectName("viewNewPatreons");
     connect(aboutAction, &QAction::triggered, this, [this]() {
-        QMessageBox::about(this, "aboutAction", "function worked");
-    });
+    QString aboutText = QString(
+        "This is a project made for testing purposes.\n"
+        "It has been designed for improving my skills in C++, Qt, GitHub Actions and multithreading.\n"
+        "Version 1.0.0"
+    );
+
+    QMessageBox::about(this, "About", aboutText);
+});
     connect(tutorialAction, &QAction::triggered, this, [this]() {
         tutorial->exec();
     });
