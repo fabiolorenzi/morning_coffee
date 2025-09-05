@@ -11,12 +11,7 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 COMPONENTS Core Gui Widgets Sql Network REQUIRED)
 
-if (WIN32)
-    set(CMAKE_WIN32_EXECUTABLE ON)
-    target_sources(MorningCoffee PRIVATE appicon.rc)
-endif()
-
-add_executable(${PROJECT_NAME}
+set(SOURCES
     src/main.cpp
     src/classes/AddSourceWidget.cpp
     src/classes/Button.cpp
@@ -37,6 +32,13 @@ add_executable(${PROJECT_NAME}
     assets/resources.qrc
 )
 
+if (WIN32)
+    add_executable(${PROJECT_NAME} WIN32 ${SOURCES} appicon.rc)
+    set(CMAKE_WIN32_EXECUTABLE ON)
+else()
+    add_executable(${PROJECT_NAME} ${SOURCES})
+endif()
+
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         Qt6::Core
@@ -45,13 +47,8 @@ target_link_libraries(${PROJECT_NAME}
         Qt6::Sql
         Qt6::Network
 )
+
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${PROJECT_SOURCE_DIR}/src
 )
-
-if(WIN32)
-    message(STATUS "Configuring for Windows")
-elseif(UNIX)
-    message(STATUS "Configuring for Unix/Linux")
-endif()
