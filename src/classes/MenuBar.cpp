@@ -16,6 +16,8 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
     tutorialAction = new QAction("Tutorial", this);
     githubAction = new QAction("Visit GitHub page", this);
 
+    tutorial = new TutorialDialog(this);
+
     addNewSourceAction->setObjectName("addNewSource");
     manageSourcesAction->setObjectName("manageSources");
     connect(exitAction, &QAction::triggered, parent, &QWidget::close);
@@ -27,7 +29,7 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
         QMessageBox::about(this, "aboutAction", "function worked");
     });
     connect(tutorialAction, &QAction::triggered, this, [this]() {
-        QMessageBox::about(this, "tutorialAction", "function worked");
+        tutorial->exec();
     });
     connect(githubAction, &QAction::triggered, this, &MenuBar::githubRedirect);
 

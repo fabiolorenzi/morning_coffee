@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <QUrl>
 
+#include "classes/TutorialDialog.h"
+
 class MenuBar : public QMenuBar {
     Q_OBJECT
 
@@ -28,6 +30,8 @@ class MenuBar : public QMenuBar {
         QAction* aboutAction;
         QAction* tutorialAction;
         QAction* githubAction;
+
+        TutorialDialog* tutorial;
 
         void githubRedirect();
 };
