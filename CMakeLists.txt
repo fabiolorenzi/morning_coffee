@@ -11,6 +11,11 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 COMPONENTS Core Gui Widgets Sql Network REQUIRED)
 
+if (WIN32)
+    set(CMAKE_WIN32_EXECUTABLE ON)
+    target_sources(MorningCoffee PRIVATE appicon.rc)
+endif()
+
 add_executable(${PROJECT_NAME}
     src/main.cpp
     src/classes/AddSourceWidget.cpp
