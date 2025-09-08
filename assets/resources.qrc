@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>icons/icon.png</file>
-        <file>images/neumorphed_logo.png</file>
-    </qresource>
-</RCC>
